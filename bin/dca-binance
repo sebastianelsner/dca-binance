@@ -4,8 +4,9 @@ __author__ = "Louis Aussedat"
 __copyright__ = "Copyright (c) 2021 Louis Aussedat"
 __license__ = "GPLv3"
 
-from dca_binance.dca_binance import exec_command_line
 import sys
 
+from dca_binance.dca_binance import exec_command_line
+
 if __name__ == "__main__":
-	exec_command_line(sys.argv)
+    exec_command_line(sys.argv)
