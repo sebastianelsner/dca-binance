@@ -14,5 +14,5 @@ setup(
     install_requires=[
         "python-binance>=1.0",
     ],
-    python_requires=">=3.9",
+    python_requires=">=3.7",
 )
