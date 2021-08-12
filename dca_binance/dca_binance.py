@@ -104,7 +104,7 @@ def main(argv):
         log.debug(f"symbol: {symbol}")
         log.debug(f"ammount: {ammount}")
 
-        depth = client.get_order_book(symbol=symbol, limit=5)
+        depth = client.get_order_book(symbol=symbol, limit=10)
         avg_price = float(depth["bids"][0][0])
 
         quantity = ammount / avg_price
