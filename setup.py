@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="dca-binance",
-    version="1.0.0",
+    version="2.0.0",
     url="https://github.com/aussedatlo/dca-binance",
     author="Louis Aussedat",
     author_email="louis.aussedat@pm.me",
@@ -14,5 +14,5 @@ setup(
     install_requires=[
         "python-binance>=1.0",
     ],
-    python_requires=">=3.7",
+    python_requires=">=3.9",
 )
