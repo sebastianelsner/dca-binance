@@ -6,6 +6,7 @@ from pathlib import Path
 
 from binance.client import Client
 from binance.exceptions import BinanceAPIException
+from binance.helpers import round_step_size
 
 from .logger import setup_logger, setup_logger_filename
 
@@ -14,6 +15,25 @@ __copyright__ = "Copyright (c) 2021 Louis Aussedat"
 __license__ = "GPLv3"
 
 log = setup_logger(__name__, logging.INFO)
+
+
+def round_down(client, coin, number):
+    """
+    Find the allowed step size for the coin and round the amount accordingly.
+
+    Args:
+        client (Client): binance client
+        coin (str): coin symbol
+        number (float): amount to bys
+
+    Returns:
+        float: correctly rounded amount
+    """
+    info = client.get_symbol_info(coin)
+    step_size = [
+        float(_["stepSize"]) for _ in info["filters"] if _["filterType"] == "LOT_SIZE"
+    ][0]
+    return round_step_size(number, step_size)
 
 
 def check_section(config, section, hard):
@@ -95,21 +115,21 @@ def main(argv):
         if not check_option(config, buy_section_name, "symbol", False):
             continue
 
-        if not check_option(config, buy_section_name, "ammount", False):
+        if not check_option(config, buy_section_name, "amount", False):
             continue
 
         symbol = config[buy_section_name]["symbol"]
-        ammount = float(config[buy_section_name]["ammount"])
+        amount = float(config[buy_section_name]["amount"])
 
         log.debug(f"symbol: {symbol}")
-        log.debug(f"ammount: {ammount}")
+        log.debug(f"amount: {amount}")
 
         depth = client.get_order_book(symbol=symbol, limit=10)
         avg_price = float(depth["bids"][0][0])
 
-        quantity = ammount / avg_price
-        quantity = f"{quantity:.5f}"
-        avg_price = f"{avg_price:.2f}"
+        quantity = amount / avg_price
+
+        quantity = round_down(client, symbol, quantity)
 
         log.info(f"{symbol} quantity to buy: {quantity}")
         log.info(f"{symbol} average price: {avg_price}")

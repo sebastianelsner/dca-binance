@@ -5,7 +5,8 @@ Small cli python script to buy cryptocurrencies on Binance.
 ## Installation
 
 ```shell
-pip3 install --user .
+python3 -p pip install -U pip
+python3 -m pip install --user .
 ```
 
 ## Usage
@@ -20,15 +21,15 @@ key: XXX
 
 [BUY1]
 # What to buy
-symbol: BTCEUR
-# Buy 11 EUR woth of BTC
-ammount: 11
+symbol: BTCUSDT
+# Buy 11 EUR worth of BTC
+amount: 11
 
 [BUY2]
 # What to buy
-symbol: ETHEUR
-# Buy 11 EUR woth of ETH
-ammount: 11
+symbol: ETHUSDT
+# Buy 11 EUR worth of ETH
+amount: 11
 ```
 
 then run
